@@ -13,11 +13,11 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
     public function store(Request $request) {
-         $validatedData = $request-&gt;validate([
+         $validatedData = $request-validate([
          'name' => 'required|max:255',
             'code' => 'required',
          ]);
          $product = Product::create($validatedData);
-         return response()-&gt;json($product, 201);
+         return response()->json($product, 201);
         }
 }
