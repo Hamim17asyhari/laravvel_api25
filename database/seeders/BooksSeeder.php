@@ -4,33 +4,44 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Book;
-use App\Models\Author; // tambahkan ini
+use App\Models\Author;
 
 class BooksSeeder extends Seeder
 {
     public function run(): void
     {
-        $author = Author::first(); // ambil 1 data penulis pertama dari tabel authors
+        // Ambil data author pertama, kalau belum ada, buat dulu
+        $author = Author::first();
+        if (!$author) {
+            $author = Author::create([
+                'name' => 'Mat',
+                'birth_date' => '1990-01-01',
+            ]);
+        }
 
-        Book::create([
-            'title' => 'Mamang',
-            'author_name' => $author->name,
-            'author_id' => $author->id,
-            'publication_year' => '2025-01-01'
-        ]);
+        // Masukkan beberapa data sekaligus
+        $books = [
+            [
+                'title' => 'Mamang',
+                'publication_year' => '2025-01-01',
+            ],
+            [
+                'title' => 'Matahari',
+                'publication_year' => '2025-02-10',
+            ],
+            [
+                'title' => 'Bulan',
+                'publication_year' => '2025-02-08',
+            ],
+        ];
 
-        // Book::create([
-        //     'title' => 'Matahari',
-        //     'author_name' => $author->name,
-        //     'author_id' => $author->id,
-        //     'publication_year' => '2025-02-10'
-        // ]);
-
-        // Book::create([
-        //     'title' => 'bulan',
-        //     'author_name' => $author->name,
-        //     'author_id' => $author->id,
-        //     'publication_year' => '2025-02-08'
-        // ]);
+        foreach ($books as $data) {
+            Book::create([
+                'title' => $data['title'],
+                'author_name' => $author->name,
+                'author_id' => $author->id,
+                'publication_year' => $data['publication_year'],
+            ]);
+        }
     }
 }
