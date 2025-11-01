@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Book;
 
 class BookController extends Controller
 {
     public function index(){
-        $books = Books::with('autor')->get();
-        return return response()->json($books);
+        $book = Book::with('authors')->get();
+        return response()->json($book);
     }
 }
