@@ -14,10 +14,16 @@ class ProductController extends Controller
     }
     public function store(Request $request) {
          $validatedData = $request-validate([
-         'name' => 'required|max:255',
+            'name' => 'required|max:255',
             'code' => 'required',
          ]);
+
          $product = Product::create($validatedData);
          return response()->json($product, 201);
         }
+    public function show($id)
+    {
+        $category = productCategory::with('products')->find($id);
+        return response()->json($category);
+    }
 }

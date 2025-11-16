@@ -1,10 +1,14 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Api\CategoryProductController;
+use App\Http\Controllers\VendorController;
+use App\Http\Controllers\ProductController;
 
-Route::get('/', [HomeController::class, 'index']);
-
-Route::get('/', function () {
-        return 'Hello World';
+Route::prefix('v1')->group(function () {
+    Route::resource('category-products', CategoryProductController::class);
+    Route::resource('vendors', VendorController::class);
+    Route::resource('products', ProductController::class);
 });
+
