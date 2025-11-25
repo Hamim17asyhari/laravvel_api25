@@ -38,7 +38,8 @@ class ProductVariantController extends Controller
                 'product_id' => 'required|exists:products,id',
                 'variant_name' => 'required',
                 'variant_code' => 'required',
-                'stock' => 'required'
+                'stock' => 'required',
+                "category_product_id" => 'required|exists:category_products,id',
             ]);
     
             $product = ProductVariant::create($validated);
@@ -57,12 +58,12 @@ class ProductVariantController extends Controller
      */
     public function show(string $id)
     {
-        $product = ProductVariant::find($id);
+        $product = ProductVariant::with('product','category')->find($id);
            if (!$product) {
                return response()->json(['message' => 'Produk tidak ditemukan'], 404);
            }
            return response()->json($product);
-           return ProductVariant::with('product')->findOrFail($id);
+           return ProductVariant::with('product','category')->findOrFail($id);
     }
 
     /**

@@ -11,8 +11,13 @@ class ProductVariant extends Model
         'product_id',
         'variant_name',
         'variant_code',
-        'stock'
+        'stock',
+        'category_product_id'
     ];
+    public function category()
+    {
+        return $this->belongsTo(CategoryProduct::class, 'category_product_id');
+    }
 
     public function product()
     {
